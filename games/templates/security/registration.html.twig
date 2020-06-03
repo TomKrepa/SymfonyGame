@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire d'inscription{% endblock %}
+
+{% block body %}
+    <h1>Inscription</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.email) }}
+    <br>
+    {{ form_row(form.pseudo) }}
+    <br>
+    {{ form_row(form.date_of_birth) }}
+    <br>
+    {{ form_row(form.password) }}
+    <br>
+    {{ form_row(form.confirm_password) }}
+    <br>
+
+    <div class="form-group">
+        <a href="{{ path('security_login') }}">Vous avez déjà un compte ? Connecter-vous</a><br>
+    </div>
+    <button type="submit" class="btn btn-success">Inscription !</button>
+    
+    {{ form_end(form) }}  
+{% endblock %}

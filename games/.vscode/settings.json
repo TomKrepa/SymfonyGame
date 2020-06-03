@@ -1,0 +1,8 @@
+{
+    "emmet.useNewEmmet": true,
+    "emmet.excludeLanguages": [
+
+        "markdown"
+    ],
+    "emmet.triggerExpansionOnTab": true
+}

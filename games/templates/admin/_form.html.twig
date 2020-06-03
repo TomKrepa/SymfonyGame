@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+
+{{ form_row(form.titre) }}
+<br>
+{{ form_row(form.image) }}
+<br>
+{{ form_row(form.prix) }}
+<br>
+{{ form_row(form.details) }}
+<br>
+
+<button type="submit" class="btn btn-success">{{ button|default('Enregistrer') }}</button>
+    
+{{ form_end(form) }}  

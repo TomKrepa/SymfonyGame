@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ jeu.titre }}{% endblock %}
+
+{% block body %}
+    <games>
+        <h2>{{ jeu.titre }}</h2><br>
+        <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div><br>
+        <img src="{{ jeu.image }}" alt=""><br><br>
+        <div class="content">
+            {{ jeu.details }}<br><br>
+            <p>Prix : {{ jeu.prix }} £</p>
+            <hr>
+        </div>
+    </games>
+
+    {% for commentaire in commentaires %}
+    {{ commentaire.email }} le {{ commentaire.CreatedAt | date("m/d/Y", "Europe/Paris") }} :
+    <div class="container">{{ commentaire.content }}</div><br>
+    {% endfor %}
+
+    {% if app.user %}
+        {{ form_start(commentForm) }}
+
+        {{ form_row(commentForm.content) }}
+        <br>
+        <button type="submit" class="btn btn-success">Laissez votre avis !</button>
+
+        {{ form_end(commentForm) }}
+    {% else %}
+        <a href="{{path('security_login')}}">Connectez-vous pour laisser votre avis !</a>
+    {% endif %}
+{% endblock %}

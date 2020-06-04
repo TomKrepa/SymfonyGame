@@ -6,7 +6,7 @@
     <games>
         <h2>{{ jeu.titre }}</h2><br>
         <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div><br>
-        <img src="{{ jeu.image }}" alt=""><br><br>
+        <img style="border-radius: 10px" src="{{ jeu.image }}" alt=""><br><br>
         <div class="content">
             {{ jeu.details }}<br><br>
             <p>Prix : {{ jeu.prix }} £</p>
@@ -16,7 +16,7 @@
 
     {% for commentaire in commentaires %}
     {{ commentaire.email }} le {{ commentaire.CreatedAt | date("m/d/Y", "Europe/Paris") }} :
-    <div class="container">{{ commentaire.content }}</div><br>
+    <div class="container; max-width: 1500px">{{ commentaire.content }}</div><br><br>
     {% endfor %}
 
     {% if app.user %}

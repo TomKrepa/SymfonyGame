@@ -54,8 +54,7 @@ class SiteController extends AbstractController
             $comment->setCreatedAt(new \DateTime())
                     ->setJeux($jeu)
                     ->setEmail($user->getUsername())
-                    /*Le pseudo est par défaut l'email, à modifié !*/
-                    ->setPseudo($user->getUsername());
+                    ->setPseudo($user->getPseudo());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);

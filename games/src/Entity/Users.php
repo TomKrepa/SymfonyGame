@@ -155,6 +155,9 @@ class Users implements UserInterface
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getPseudo(): ?string
     {
         return $this->pseudo;

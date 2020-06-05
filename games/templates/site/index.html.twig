@@ -15,6 +15,7 @@
             <br><br>
             <p>Prix : {{ jeu.prix }}€</p>
             <a href="{{ path('game_show', {'id': jeu.id}) }}" class="btn btn-primary" style="float: left">Voir le jeu</a>
+            <a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary" style="float: left">Ajouter au Panier</a>
         </div>
     </div>
 {% endfor %}

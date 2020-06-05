@@ -9,14 +9,16 @@
         <img style="border-radius: 10px" src="{{ jeu.image }}" alt=""><br><br>
         <div class="content">
             {{ jeu.details }}<br><br>
-            <p>Prix : {{ jeu.prix }} £</p>
+            <p>Prix : {{ jeu.prix }} €</p><a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary">Ajouter au Panier</a>
             <hr>
         </div>
     </games>
 
+    <h3>Commentaires :</h3><br>
+
     {% for commentaire in commentaires %}
     {{ commentaire.email }} le {{ commentaire.CreatedAt | date("m/d/Y", "Europe/Paris") }} :
-    <div class="container; max-width: 1500px">{{ commentaire.content }}</div><br><br>
+    <div class="container; max-width: 1500px">{{ commentaire.content }}</div><br>
     {% endfor %}
 
     {% if app.user %}

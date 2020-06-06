@@ -9,10 +9,10 @@ use App\Form\CommentType;
 use App\Repository\JeuxRepository;
 use App\Repository\CommentairesRepository;
 use App\Repository\JeuLikeRepository;
+use App\Service\Panier\PanierService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -129,30 +129,12 @@ class SiteController extends AbstractController
     /**
      * @Route("/panier", name="panier")
      */
-    public function panier(SessionInterface $session, JeuxRepository $repo)
+    public function panier(PanierService $panierService)
     {
-
-        /* Panier de la session */
-        $panier = $session->get('panier', []);
-        $panierWithData = [];
-
-        foreach ($panier as $id => $quantity) {
-            $panierWithData[] = [
-                'jeux' => $repo->find($id),
-                'quantity' => $quantity
-            ];
-        }
-
-        $total = 0;
-
-        foreach ($panierWithData as $item) {
-            $totalItem = $item['jeux']->getPrix() * $item['quantity'];
-            $total += $totalItem;
-        }
-
+        // Utilise les fonctions du PanierService
         return $this->render('site/panier.html.twig', [
-            'items' => $panierWithData,
-            'total' => $total
+            'items' => $panierService->getFullPanier(),
+            'total' => $panierService->getTotal()
         ]);
     }
 
@@ -160,18 +142,10 @@ class SiteController extends AbstractController
     /**
      * @Route("/panier/ajouter/{id}", name="panier_add")
      */
-    public function ajouter($id, SessionInterface $session, Jeux $jeu)
+    public function add($id, PanierService $panierService, Jeux $jeu)
     {
-
-        $panier = $session->get('panier', []);
-
-        if (!empty($panier[$id])) {
-            $panier[$id]++;
-        } else {
-            $panier[$id] = 1;
-        }
-
-        $session->set('panier', $panier);
+        // Utilise la fonction du PanierService
+        $panierService->add($id);
 
         $this->addFlash('success', 'Le jeu ' . $jeu->getTitre() . ' a bien été ajouté au panier');
 
@@ -182,16 +156,10 @@ class SiteController extends AbstractController
     /**
      * @Route("/panier/supprimer/{id}", name="panier_remove")
      */
-    public function remove($id, SessionInterface $session, Jeux $jeu)
+    public function remove($id, PanierService $panierService, Jeux $jeu)
     {
-
-        $panier = $session->get('panier', []);
-
-        if (!empty($panier[$id])) {
-            unset($panier[$id]);
-        }
-
-        $session->set('panier', $panier);
+        // Utilise la fonction du PanierService
+        $panierService->remove($id);
 
         $this->addFlash('warning', 'Le jeu ' . $jeu->getTitre() . ' a été supprimer du panier');
 

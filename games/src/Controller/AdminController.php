@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Entity\Jeux;
+use App\Entity\Commentaires;
 use App\Form\JeuType;
 use App\Form\UserType;
 use App\Form\RegistrationType;
+use App\Repository\CommentairesRepository;
 use App\Repository\JeuxRepository;
 use App\Repository\UsersRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -208,8 +210,31 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/dashboard", name="admin_dashboard")
      */
-    public function dashboard()
+    public function dashboard(CommentairesRepository $CommentRepo)
     {
-        return $this->render('admin/dashboard.html.twig');
+        $commentaires = $CommentRepo->findAll();
+
+        return $this->render('admin/dashboard.html.twig', [
+            'commentaires' => $commentaires,
+        ]);
+    }
+
+    /* SUPPRIMER UN COMMENTAIRE */
+    /**
+     * @Route("/admin/dashboard/delete/{id}", name="admin_comment_delete", methods="DELETE")
+     */
+    public function delete_comment(Commentaires $commentaires, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete' . $commentaires->getId(), $request->get('_token'))) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($commentaires);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le commentaire de ' . $commentaires->getEmail() . ' a bien été supprimé');
+        }
+
+        return $this->redirectToRoute('admin_dashboard');
+
     }
 }

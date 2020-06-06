@@ -21,7 +21,7 @@
         <h3>Commentaires :</h3><br>
 
         {% for commentaire in commentaires %}
-            {{ commentaire.email }} le {{ commentaire.CreatedAt | date("m/d/Y", "Europe/Paris") }} :
+            {{ commentaire.email }} le {{ commentaire.CreatedAt | date("m/d/Y H:s", "Europe/Paris") }} :
             <div class="container; max-width: 1500px">{{ commentaire.content }}</div><br>
         {% endfor %}
 

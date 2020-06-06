@@ -3,33 +3,39 @@
 {% block title %}{{ jeu.titre }}{% endblock %}
 
 {% block body %}
-    <games>
-        <h2>{{ jeu.titre }}</h2><br>
-        <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div><br>
-        <img style="border-radius: 10px" src="{{ jeu.image }}" alt=""><br><br>
-        <div class="content">
-            {{ jeu.details }}<br><br>
-            <p>Prix : {{ jeu.prix }} €</p><a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary">Ajouter au Panier</a>
-            <hr>
-        </div>
-    </games>
 
-    <h3>Commentaires :</h3><br>
+    {# ESPACE PRODUIT #}
+        <games>
+            <h2>{{ jeu.titre }}</h2><br>
+            <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div><br>
+            <img style="border-radius: 10px" src="{{ jeu.image }}" alt=""><br><br>
 
-    {% for commentaire in commentaires %}
-    {{ commentaire.email }} le {{ commentaire.CreatedAt | date("m/d/Y", "Europe/Paris") }} :
-    <div class="container; max-width: 1500px">{{ commentaire.content }}</div><br>
-    {% endfor %}
+            <div class="content">
+                {{ jeu.details }}<br><br>
+                <p>Prix : {{ jeu.prix }} €</p><a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary">Ajouter au Panier</a>
+                <hr>
+            </div>
+        </games>
 
-    {% if app.user %}
-        {{ form_start(commentForm) }}
+    {# ESPACE COMMENTAIRES #}
+        <h3>Commentaires :</h3><br>
 
-        {{ form_row(commentForm.content) }}
-        <br>
-        <button type="submit" class="btn btn-success">Laissez votre avis !</button>
+        {% for commentaire in commentaires %}
+            {{ commentaire.email }} le {{ commentaire.CreatedAt | date("m/d/Y", "Europe/Paris") }} :
+            <div class="container; max-width: 1500px">{{ commentaire.content }}</div><br>
+        {% endfor %}
 
-        {{ form_end(commentForm) }}
-    {% else %}
-        <a href="{{path('security_login')}}">Connectez-vous pour laisser votre avis !</a>
-    {% endif %}
+        {# Si l'utilisateur est connecté, il peut laisser un commentaire sinon il peut allez se connecter #}
+        {% if app.user %}
+            {{ form_start(commentForm) }}
+
+            {{ form_row(commentForm.content) }}<br>
+                <button type="submit" class="btn btn-success">Laissez votre avis !</button>
+                <a href="{{ path('games') }}" class="btn btn-primary">RETOUR</a>
+                
+            {{ form_end(commentForm) }}
+        {% else %}
+            <a href="{{path('security_login')}}">Connectez-vous pour laisser votre avis !</a>
+        {% endif %}
+
 {% endblock %}

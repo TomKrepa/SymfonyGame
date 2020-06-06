@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Ajouter un jeu{% endblock %}
 
 {% block body %}
-<div class="containe mt-4">
-    <h1>Ajouter un nouveau jeu</h1>
 
-    {{ include('admin/_form_jeux.html.twig', {form: form, button: 'Créer'}) }}
+    <div class="containe mt-4">
 
-</div>
+        <h1>Ajouter un nouveau jeu</h1>
+
+        {# Récupère le formulaire en passant le bouton Créer #}
+        {{ include('admin/_form_jeux.html.twig', {form: form, button: 'Créer'}) }}
+
+    </div>
+
 {% endblock %}

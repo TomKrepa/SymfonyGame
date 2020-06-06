@@ -1,25 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Ajouter un membre{% endblock %}
 
 {% block body %}
-<div class="containe mt-4">
-    <h1>Ajouter un nouvel utilisateur</h1>
 
-    {{ form_start(form) }}
+    <div class="containe mt-4">
 
-    {{ form_row(form.email) }}
-    <br>
-    {{ form_row(form.pseudo) }}
-    <br>
-    {{ form_row(form.date_of_birth) }}
-    <br>
-    {{ form_row(form.password) }}
-    <br>
-    {{ form_row(form.confirm_password) }}
-    <br>
-    <button type="submit" class="btn btn-success">Créer</button>
-    {{ form_end(form) }}  
-    
-</div>
+        <h1>Ajouter un nouvel utilisateur</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_row(form.email) }}
+        <br>
+        {{ form_row(form.pseudo) }}
+        <br>
+        {{ form_row(form.date_of_birth) }}
+        <br>
+        {{ form_row(form.password) }}
+        <br>
+        {{ form_row(form.confirm_password) }}
+        <br>
+        <button type="submit" class="btn btn-success">Créer</button>
+        {{ form_end(form) }}
+        
+    </div>
+
 {% endblock %}

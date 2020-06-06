@@ -3,6 +3,7 @@
 {% block title %}Formulaire d'inscription{% endblock %}
 
 {% block body %}
+
     <h1>Inscription</h1>
 
     {{ form_start(form) }}
@@ -21,7 +22,9 @@
     <div class="form-group">
         <a href="{{ path('security_login') }}">Vous avez déjà un compte ? Connecter-vous</a><br>
     </div>
+    
     <button type="submit" class="btn btn-success">Inscription !</button>
     
     {{ form_end(form) }}  
+
 {% endblock %}

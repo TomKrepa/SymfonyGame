@@ -4,21 +4,30 @@
 
 {% block body %}
 
-<div class="container" style="margin: 10px; display: flex; justify-content: space-between; flex-wrap: wrap; max-width: 1500px">
-{% for jeu in jeux %}
-    <div class="game_item" style="flex: 0 0 25%; margin-bottom: 80px; margin-right: 80px">
-        <h2 style="font-size: 22px">{{ jeu.titre }}</h2>
-            <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div>
-            <img src="{{ jeu.image }}" alt="" style="width: 300px; height: 150px; border-radius: 10px">
-            <div class="content">
-            {{ jeu.details }}
-            <br><br>
-            <p>Prix : {{ jeu.prix }}€</p>
-            <a href="{{ path('game_show', {'id': jeu.id}) }}" class="btn btn-primary" style="float: left">Voir le jeu</a>
-            <a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary" style="float: left">Ajouter au Panier</a>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
         </div>
+    {% endfor %}
+
+    <div class="container" style="margin: 10px; display: flex; justify-content: space-between; flex-wrap: wrap; max-width: 1500px">
+        {% for jeu in jeux %}
+            <div class="game_item" style="flex: 0 0 25%; margin-bottom: 80px; margin-right: 80px">
+
+                <h2 style="font-size: 22px">{{ jeu.titre }}</h2>
+
+                <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div>
+
+                <img src="{{ jeu.image }}" alt="" style="width: 300px; height: 150px; border-radius: 10px">
+                    
+                <div class="content">
+                    {{ jeu.details }}<br><br>
+                    <p>Prix : {{ jeu.prix }}€</p>
+                    <a href="{{ path('game_show', {'id': jeu.id}) }}" class="btn btn-primary" style="float: left">Voir le jeu</a>
+                    <a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary" style="float: left">Ajouter au Panier</a>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-{% endfor %}
-</div>
 
 {% endblock %}

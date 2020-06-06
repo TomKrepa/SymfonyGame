@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\JeuxRepository;
-use App\Repository\UsersRepository;
 use App\Entity\Users;
 use App\Entity\Jeux;
 use App\Form\JeuType;
 use App\Form\UserType;
 use App\Form\RegistrationType;
+use App\Repository\JeuxRepository;
+use App\Repository\UsersRepository;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminController extends AbstractController
 {
+    /* GESTION DES JEUX */
     /**
      * @Route("/admin/jeux", name="admin_games_index")
      */
     public function index_jeu(JeuxRepository $repo)
     {
         $repo = $this->getDoctrine()->getRepository(Jeux::class);
-
         $jeux = $repo->findAll();
 
         return $this->render('admin/index_jeux.html.twig', [
@@ -31,24 +31,26 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /* AJOUTER UN JEU */
     /**
      * @Route("/admin/jeux/nouveau", name="admin_game_create")
      */
     public function new_jeu(Request $request)
     {
         $jeu = new Jeux();
-
         $form = $this->createForm(JeuType::class, $jeu);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
 
+            /* Nouvelle date de création */
             $jeu->setCreatedAt(new \DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($jeu);
             $entityManager->flush();
+
             $this->addFlash('success', 'Le jeu ' . $jeu->getTitre() . ' a bien été ajouté');
 
             return $this->redirectToRoute('admin_games_index');
@@ -60,6 +62,7 @@ class AdminController extends AbstractController
         ]);       
     }
 
+    /* EDITER UN JEU */
     /**
      * @Route("/admin/jeux/edit/{id}", name="admin_game_edit", methods="POST|GET")
      */
@@ -74,6 +77,7 @@ class AdminController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($jeu);
             $entityManager->flush();
+
             $this->addFlash('success', 'Le jeu ' . $jeu->getTitre() . ' a bien été modifié');
 
             return $this->redirectToRoute('admin_games_index');
@@ -85,6 +89,7 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /* SUPPRIMER UN JEU */
     /**
      * @Route("/admin/jeux/edit/{id}", name="admin_game_delete", methods="DELETE")
      */
@@ -95,6 +100,7 @@ class AdminController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($jeu);
             $entityManager->flush();
+
             $this->addFlash('success', 'Le jeu ' . $jeu->getTitre() . ' a bien été supprimé');
         }
 
@@ -102,13 +108,13 @@ class AdminController extends AbstractController
 
     }
 
+    /* GESTION DES USERS */
     /**
      * @Route("/admin/users", name="admin_users_index")
      */
     public function index_user(UsersRepository $repo)
     {
         $repo = $this->getDoctrine()->getRepository(Users::class);
-
         $users = $repo->findAll();
 
         return $this->render('admin/index_users.html.twig', [
@@ -117,25 +123,27 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /* AJOUTER UN USER */
     /**
      * @Route("/admin/users/nouveau", name="admin_user_create")
      */
     public function new_user(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = new Users();
-
         $form = $this->createForm(RegistrationType::class, $user);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
 
+            /* Hashage du mot de passe */
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
             $this->addFlash('success', 'Le nouvel utilisateur ' . $user->getEmail() . ' a bien été ajouté');
 
             return $this->redirectToRoute('admin_users_index');
@@ -147,6 +155,7 @@ class AdminController extends AbstractController
         ]);       
     }
 
+    /* EDITER UN USER */
     /**
      * @Route("/admin/users/edit/{id}", name="admin_user_edit", methods="POST|GET")
      */
@@ -176,6 +185,7 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /* SUPPRIMER UN USER */
     /**
      * @Route("/admin/users/edit/{id}", name="admin_user_delete", methods="DELETE")
      */
@@ -186,10 +196,20 @@ class AdminController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
+
             $this->addFlash('success', 'Le user ' . $user->getPseudo() . ' a bien été supprimé');
         }
 
         return $this->redirectToRoute('admin_users_index');
 
+    }
+
+    /* DASHBOARD */
+    /**
+     * @Route("/admin/dashboard", name="admin_dashboard")
+     */
+    public function dashboard()
+    {
+        return $this->render('admin/dashboard.html.twig');
     }
 }

@@ -2,26 +2,26 @@
 
 namespace App\Controller;
 
-use App\Entity\Commentaires;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Jeux;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Commentaires;
+use App\Form\CommentType;
 use App\Repository\JeuxRepository;
 use App\Repository\CommentairesRepository;
-use App\Form\CommentType;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SiteController extends AbstractController
 {
+    /* CATALOGUE DES JEUX */
     /**
      * @Route("/games", name="games")
      */
     public function index(JeuxRepository $repo)
     {
         $repo = $this->getDoctrine()->getRepository(Jeux::class);
-
         $jeux = $repo->findAll();
 
         return $this->render('site/index.html.twig', [
@@ -30,6 +30,7 @@ class SiteController extends AbstractController
         ]);
     }
 
+    /* PAGE D'ACCEUIL */
     /**
      * @Route("/", name="home")
      */
@@ -38,6 +39,7 @@ class SiteController extends AbstractController
         return $this->render('site/home.html.twig');
     }
 
+    /* LA PAGE D'UN JEU */
     /**
      * @Route("/games/{id}", name="game_show")
      */
@@ -73,14 +75,15 @@ class SiteController extends AbstractController
         ]);
     }
 
+    /* LE PANIER */
     /**
      * @Route("/panier", name="panier")
      */
     public function panier(SessionInterface $session, JeuxRepository $repo)
     {
 
+        /* Panier de la session */
         $panier = $session->get('panier', []);
-
         $panierWithData = [];
 
         foreach ($panier as $id => $quantity) {
@@ -103,10 +106,11 @@ class SiteController extends AbstractController
         ]);
     }
 
+    /* AJOUTER AU PANIER */
     /**
      * @Route("/panier/ajouter/{id}", name="panier_add")
      */
-    public function ajouter($id, SessionInterface $session)
+    public function ajouter($id, SessionInterface $session, Jeux $jeu)
     {
 
         $panier = $session->get('panier', []);
@@ -119,13 +123,16 @@ class SiteController extends AbstractController
 
         $session->set('panier', $panier);
 
+        $this->addFlash('success', 'Le jeu ' . $jeu->getTitre() . ' a bien été ajouté au panier');
+
         return $this->redirectToRoute('games');
     }
 
+    /* SUPPRIMER DU PANIER */
     /**
      * @Route("/panier/supprimer/{id}", name="panier_remove")
      */
-    public function remove($id, SessionInterface $session)
+    public function remove($id, SessionInterface $session, Jeux $jeu)
     {
 
         $panier = $session->get('panier', []);
@@ -135,6 +142,8 @@ class SiteController extends AbstractController
         }
 
         $session->set('panier', $panier);
+
+        $this->addFlash('warning', 'Le jeu ' . $jeu->getTitre() . ' a été supprimer du panier');
 
         return $this->redirectToRoute('panier');
     }

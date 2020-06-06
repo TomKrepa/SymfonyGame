@@ -3,49 +3,55 @@
 {% block title %}Gestion des Jeux{% endblock %}
 
 {% block body %}
-<div class="container mt-4">
 
-    <h1>Gérer les jeux</h1>
+    <div class="container mt-4">
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
+        <h1>Gérer les jeux</h1>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Titre</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        {% for jeu in jeux %}
-        <tr>
-            <td>{{ jeu.id }}</td>
-            <td><img src="{{ jeu.image }}" alt="" style="width: 300px; height: 150px"></td>
-            <td>{{ jeu.titre }}</td>
-            <td>
-                <a href="{{ path('admin_game_edit', {'id': jeu.id}) }}" class="btn btn-secondary">Editer</a>
-                <form method="POST" action="{{ path('admin_game_delete', {'id': jeu.id}) }}" style="display: inline-block"
-                onsubmit="return confirm('Voulez-vous vraiment supprimer ce jeu ?')">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ jeu.id) }}">
-                    <button class="btn btn-danger">Supprimer</button>
-                </form>
-            </td>
-        </tr>
+        {# MESSAGE #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
 
-    <div class="class-right">
-        <a href="{{ path('admin_game_create') }}" class="btn btn-primary">Ajouter un nouveau jeu</a>
-    </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for jeu in jeux %}
+                <tr>
+                    <td>{{ jeu.id }}</td>
+                    <td><img src="{{ jeu.image }}" alt="" style="width: 300px; height: 150px"></td>
+                    <td>{{ jeu.titre }}</td>
+                    <td>
+                        {# EDITER le jeu #}
+                        <a href="{{ path('admin_game_edit', {'id': jeu.id}) }}" class="btn btn-secondary">Editer</a>
 
-</div> 
+                        {# SUPPRIMER le jeu #}
+                        <form method="POST" action="{{ path('admin_game_delete', {'id': jeu.id}) }}" style="display: inline-block"
+                            onsubmit="return confirm('Voulez-vous vraiment supprimer ce jeu ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ jeu.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {# CREER un jeu #}
+        <div class="class-right">
+            <a href="{{ path('admin_game_create') }}" class="btn btn-primary">Ajouter un nouveau jeu</a>
+        </div>
+
+    </div> 
+
 {% endblock %}

@@ -12,16 +12,24 @@
         </head>
         <body>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="/">JeuxVideo</a>
+
+                <a class="navbar-brand" href="{{ path('home') }}">JeuxVideo</a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarColor02">
                     <ul class="navbar-nav mr-auto">
+
+                    {# NAV GAUCHE #}
+
+                        {# Si l'utilisateur n'est pas connecté, NAVBAR: S'inscrire #}
                         {% if not app.user %}
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ path('security_registration') }}">S'inscrire</a>
                             </li>
+                        {# Si l'utilisateur est connecté, NAVBAR: Catalogue, Panier #}
                         {% else %}
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ path('games') }}">Catalogue</a>
@@ -32,7 +40,11 @@
                         {% endif %}
 
                         {% if not app.user %}
+                        {# Si l'utilisateur est un admin, NAVBAR: Catalogue, Panier Gestion des jeux/utilisateur #}
                         {% elseif app.user.roles[0] == "ROLE_ADMIN" %}
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ path('admin_dashboard') }}">Dashboard</a>
+                            </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ path('admin_games_index') }}">Gestion des jeux</a>
                             </li>
@@ -40,12 +52,28 @@
                                 <a class="nav-link" href="{{ path('admin_users_index') }}">Gestion des utilisateurs</a>
                             </li>
                         {% endif %}
+
                     </ul>
+
+                    {# NAV DROITE #}
+
+                        {# Si l'utilisateur est conecté, Déconnexion et affichage du rôle #}
                         {% if app.user %}
                             <form class="form-inline my-2 my-lg-0">
-                                <a class="nav-link" href="{{ path('security_logout') }}">Déconnexion</a>  
+
+                                <a class="nav-link" href="{{ path('security_logout') }}">Déconnexion</a>
+
                                 <button type="button" class="btn btn-success disabled">{{ app.user.email }}</button>
+
+                                    {# Rôle ADMIN ou USER #}
+                                    {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                                        <button type="button" style="margin-left: 10px" class="btn btn-primary disabled">Rôle : ADMIN</button>
+                                    {% else %}
+                                        <button type="button" style="margin-left: 10px" class="btn btn-secondary disabled">Rôle : USER</button>
+                                    {% endif %}
                             </form>
+
+                        {# Si l'utilisateur n'est pas connecté, Connexion #}
                         {% else %}
                             <form class="form-inline my-2 my-lg-0">
                                 <a class="nav-link" href="{{ path('security_logout') }}">Connexion</a>  
@@ -54,23 +82,11 @@
                         {% endif %}
                 </div>
             </nav>
-            {% if not app.user %}
-                <div class="col col-lg-4" style="position: absolute; left: 82%; top: 7%;">
-                    
-                </div>
-            {% elseif app.user.roles[0] == "ROLE_ADMIN" %}
-                <div class="col col-lg-4" style="position: absolute; left: 82%; top: 7%;">
-                    Vous êtes connecté en tant que administrateur
-                </div>
-            {% else %}
-                <div class="col col-lg-4" style="position: absolute; left: 82%; top: 7%;">
-                    Vous êtes connecté en tant que utilisateur
-                </div>
-            {% endif %}
-            <div class="container" style="margin: 10px; max-width: 1500px">
-            <br>
-            {% block body %}{% endblock %}
+
+            <div class="container" style="margin: 10px; max-width: 1500px"><br>
+                {% block body %}{% endblock %}
             </div>
+
             {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -25,9 +25,70 @@
                     <p>Prix : {{ jeu.prix }}€</p>
                     <a href="{{ path('game_show', {'id': jeu.id}) }}" class="btn btn-primary" style="float: left">Voir le jeu</a>
                     <a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary" style="float: left">Ajouter au Panier</a>
+
+                    {# Si l'utilisateur est connecté et qu'il a aimé ce jeu, Coeur plein, sinon Coeur vide #}
+                    <a href="{{ path('games_like', {'id': jeu.id}) }}" class="btn btn-link js-like">
+                        {% if app.user and jeu.isLikedByUser(app.user) %}
+                            <i class="fas fa-heart"></i>
+                        {% else %}
+                            <i class="far fa-heart"></i>
+                        {% endif %}
+                        <span class="js-likes">{{ jeu.likes|length }}</span><br>
+                        <span class="js-label">J'aime</span>
+                    </a>
                 </div>
             </div>
         {% endfor %}
     </div>
 
 {% endblock %}
+
+{% block javascripts %}
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    {# Script axios pour le bouton j'aime #}
+    <script>
+
+        function onClickBtnLike(event) {
+            // Event la page ne bouge pas
+            event.preventDefault();
+
+            // L'url, le compteur de j'aime et l'icône
+            const url = this.href;
+            const spanCount = this.querySelector('span.js-likes');
+            const icone = this.querySelector('i');
+
+            // Requête sur l'url et réception de la réponse
+            axios.get(url).then(function(response) {
+
+                // Le compteur de j'aime est égal au résultat de la requête
+                spanCount.textContent = response.data.likes;
+
+                // Si l'icône à la classe vide, remplace par la classe plein sinon l'inverse
+                if(icone.classList.contains('fas'))
+
+                    icone.classList.replace('fas', 'far');
+                else 
+                    icone.classList.replace('far', 'fas');
+
+            // GESTION DES ERREURS : 403 l'utilisateur doit être connecté, sinon autre
+            }).catch(function(error) {
+                if(error.response.status === 403) 
+                    window.alert("Pour aimer un jeu, vous devez vous connecté.");
+
+                else 
+                    window.alert("Une erreur s'est produite, réessayé plus tard.")   
+            })
+        }
+    
+        // Pour tous les liens de cette classe, appel au click la fonction au dessus
+        document.querySelectorAll('a.js-like').forEach(function(link) {
+            link.addEventListener('click', onClickBtnLike)
+        })
+
+    </script>
+
+{% endblock %}
+
+

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Users;
 use App\Repository\JeuxRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -54,10 +55,16 @@ class Jeux
      */
     private $created_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity=JeuLike::class, mappedBy="jeu")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,5 +187,46 @@ class Jeux
         $this->created_at = $created_at;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|JeuLike[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(JeuLike $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(JeuLike $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getJeu() === $this) {
+                $like->setJeu(null);
+            }
+        }
+
+        return $this;
+    }
+
+    // Retourne vrai si parmis tous les likes de ce jeu, 1 like correspond à cet utilisateur
+    // Permet de savoir si cet article est aimé par l'utilisateur
+    public function isLikedByUser(Users $user) : bool
+    {
+        foreach($this->likes as $like) {
+            if($like->getUser() === $user) return true;
+        }
+        return false;
     }
 }

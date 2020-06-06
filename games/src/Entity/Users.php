@@ -65,6 +65,16 @@ class Users implements UserInterface
      */
     private $solde = 0;
 
+    /**
+     * @ORM\OneToMany(targetEntity=JeuLike::class, mappedBy="user")
+     */
+    private $likes;
+
+    public function __construct()
+    {
+        $this->likes = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -178,6 +188,37 @@ class Users implements UserInterface
     public function setSolde(?float $solde): self
     {
         $this->solde = $solde;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|JeuLike[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(JeuLike $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(JeuLike $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
 
         return $this;
     }

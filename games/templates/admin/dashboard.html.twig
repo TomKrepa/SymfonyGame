@@ -6,46 +6,48 @@
 
     <h1>Dashboard</h1><br>
 
-    <h2>Avis des utilisateurs</h2>
+    <div class="container mt-4">
+        <h2>Avis des utilisateurs</h2>
 
-    {# MESSAGE #}
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
+        {# MESSAGE #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 
-    <table class="table table-striped">
-            <thead>
-                <tr>
-                    <td>ID</td>
-                    <th>Utilisateur</th>
-                    <th>Jeu</th>
-                    <th>Commentaire</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for commentaire in commentaires %}
-                <tr>
-                    <td>{{ commentaire.id }}</td>
-                    <td>{{ commentaire.email }}</td>
-                    <td>{{ commentaire.jeux.id }} - <a href="{{ path('game_show', {'id': commentaire.jeux.id}) }}">Voir ce jeu</a></td>
-                    <td>{{ commentaire.content }}</td>
-                    <td>{{ commentaire.CreatedAt | date("m/d/Y H:s", "Europe/Paris") }}</td>
-                    <td>
-                        {# SUPPRIMER le commentaire #}
-                        <form method="POST" action="{{ path('admin_comment_delete', {'id': commentaire.id}) }}" style="display: inline-block"
-                            onsubmit="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.id) }}">
-                            <button class="btn btn-danger">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
+        <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <th>Utilisateur</th>
+                        <th>Jeu</th>
+                        <th>Commentaire</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for commentaire in commentaires %}
+                    <tr>
+                        <td>{{ commentaire.id }}</td>
+                        <td>{{ commentaire.email }}</td>
+                        <td>{{ commentaire.jeux.id }} - <a href="{{ path('game_show', {'id': commentaire.jeux.id}) }}">Voir ce jeu</a></td>
+                        <td>{{ commentaire.content }}</td>
+                        <td>{{ commentaire.CreatedAt | date("m/d/Y H:s", "Europe/Paris") }}</td>
+                        <td>
+                            {# SUPPRIMER le commentaire #}
+                            <form method="POST" action="{{ path('admin_comment_delete', {'id': commentaire.id}) }}" style="display: inline-block"
+                                onsubmit="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.id) }}">
+                                <button class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
         </table>
+    </div>
 
 {% endblock %}

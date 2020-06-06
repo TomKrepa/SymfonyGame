@@ -8,6 +8,8 @@
         <link rel="stylesheet"
         href="https://bootswatch.com/4/lumen/bootstrap.min.css">
 
+        <script src="https://kit.fontawesome.com/c415004056.js" crossorigin="anonymous"></script>
+
         {% block stylesheets %}{% endblock %}
         </head>
         <body>
@@ -40,16 +42,16 @@
                         {% endif %}
 
                         {% if not app.user %}
-                        {# Si l'utilisateur est un admin, NAVBAR: Catalogue, Panier Gestion des jeux/utilisateur #}
+                        {# Si l'utilisateur est un admin, NAVBAR: Catalogue, Panier, Dashboard, Gestion des jeux/utilisateur #}
                         {% elseif app.user.roles[0] == "ROLE_ADMIN" %}
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ path('admin_dashboard') }}">Dashboard</a>
-                            </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ path('admin_games_index') }}">Gestion des jeux</a>
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ path('admin_users_index') }}">Gestion des utilisateurs</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ path('admin_dashboard') }}">Dashboard</a>
                             </li>
                         {% endif %}
 

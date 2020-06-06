@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminController extends AbstractController
 {
-    /* GESTION DES JEUX */
+    // GESTION DES JEUX 
     /**
      * @Route("/admin/jeux", name="admin_games_index")
      */
@@ -33,7 +33,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /* AJOUTER UN JEU */
+    // AJOUTER UN JEU 
     /**
      * @Route("/admin/jeux/nouveau", name="admin_game_create")
      */
@@ -46,7 +46,7 @@ class AdminController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            /* Nouvelle date de création */
+            // Nouvelle date de création 
             $jeu->setCreatedAt(new \DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -64,7 +64,7 @@ class AdminController extends AbstractController
         ]);       
     }
 
-    /* EDITER UN JEU */
+    // EDITER UN JEU 
     /**
      * @Route("/admin/jeux/edit/{id}", name="admin_game_edit", methods="POST|GET")
      */
@@ -91,7 +91,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /* SUPPRIMER UN JEU */
+    // SUPPRIMER UN JEU 
     /**
      * @Route("/admin/jeux/edit/{id}", name="admin_game_delete", methods="DELETE")
      */
@@ -110,7 +110,7 @@ class AdminController extends AbstractController
 
     }
 
-    /* GESTION DES USERS */
+    // GESTION DES USERS 
     /**
      * @Route("/admin/users", name="admin_users_index")
      */
@@ -125,7 +125,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /* AJOUTER UN USER */
+    // AJOUTER UN USER 
     /**
      * @Route("/admin/users/nouveau", name="admin_user_create")
      */
@@ -157,7 +157,7 @@ class AdminController extends AbstractController
         ]);       
     }
 
-    /* EDITER UN USER */
+    // EDITER UN USER 
     /**
      * @Route("/admin/users/edit/{id}", name="admin_user_edit", methods="POST|GET")
      */
@@ -187,7 +187,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /* SUPPRIMER UN USER */
+    // SUPPRIMER UN USER 
     /**
      * @Route("/admin/users/edit/{id}", name="admin_user_delete", methods="DELETE")
      */
@@ -206,7 +206,7 @@ class AdminController extends AbstractController
 
     }
 
-    /* DASHBOARD */
+    // DASHBOARD 
     /**
      * @Route("/admin/dashboard", name="admin_dashboard")
      */
@@ -219,7 +219,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /* SUPPRIMER UN COMMENTAIRE */
+    // SUPPRIMER UN COMMENTAIRE 
     /**
      * @Route("/admin/dashboard/delete/{id}", name="admin_comment_delete", methods="DELETE")
      */

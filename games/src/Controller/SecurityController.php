@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /* S'INSCRIRE */
+    // S'INSCRIRE 
     /**
      * @Route("/inscription", name="security_registration")
      */
@@ -25,7 +25,7 @@ class SecurityController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            /* Hashage du mot de passe */
+            // Hashage du mot de passe 
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
 
@@ -43,7 +43,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /* CONNEXION */
+    // CONNEXION 
     /**
      * @Route("/connexion", name="security_login")
      */

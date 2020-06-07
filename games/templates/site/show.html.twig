@@ -8,7 +8,7 @@
         <games>
             <h2>{{ jeu.titre }}</h2><br>
             <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div><br>
-            <img style="border-radius: 10px" src="{{ jeu.image }}" alt=""><br><br>
+            <img src="{{ jeu.image }}" alt=""><br><br>
 
             <div class="content">
                 {{ jeu.details }}<br><br>

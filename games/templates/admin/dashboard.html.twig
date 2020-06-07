@@ -19,7 +19,6 @@
         <table class="table table-striped">
                 <thead>
                     <tr>
-                        <td>ID</td>
                         <th>Utilisateur</th>
                         <th>Jeu</th>
                         <th>Commentaire</th>
@@ -30,14 +29,13 @@
                 <tbody>
                 {% for commentaire in commentaires %}
                     <tr>
-                        <td>{{ commentaire.id }}</td>
                         <td>{{ commentaire.email }}</td>
                         <td><a class="btn btn-secondary" href="{{ path('game_show', {'id': commentaire.jeux.id}) }}"><i class="fas fa-eye"></i></a></td>
                         <td>{{ commentaire.content }}</td>
                         <td>{{ commentaire.CreatedAt | date("m/d/Y H:s", "Europe/Paris") }}</td>
                         <td>
                             {# SUPPRIMER le commentaire #}
-                            <form method="POST" action="{{ path('admin_comment_delete', {'id': commentaire.id}) }}" style="display: inline-block"
+                            <form method="POST" action="{{ path('admin_comment_delete', {'id': commentaire.id}) }}"
                                 onsubmit="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.id) }}">

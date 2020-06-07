@@ -20,7 +20,7 @@
                     <thead>
                         <tr>
                             <th>Produit</th>
-                            <th>Image</th>
+                            <th>Titre</th>
                             <th>Prix</th>
                             <th>Quantité</th>
                             <th>Total</th>
@@ -30,13 +30,13 @@
                     <tbody>
                         {% for item in items %}
                             <tr>
+                                <td><img src="{{ item.jeux.image }}"></td>
                                 <td>{{ item.jeux.titre }}</td>
-                                <td><img src="{{ item.jeux.image }}" style="width: 200px; height: 100px"></td>
                                 <td>{{ item.jeux.prix }}  €</td>
                                 <td>{{ item.quantity }}</td>
                                 <td>{{ item.jeux.prix * item.quantity }} €</td>
                                 <td>
-                                    <a href="{{ path('panier_remove', {'id': item.jeux.id}) }}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ path('panier_remove', {'id': item.jeux.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}

@@ -4,7 +4,12 @@
 
 {% block body %}
 
-<h1>Gestion des utilisateurs</h1>
+    <h1>Gestion des utilisateurs</h1>
+
+    {# CREER un utilisateur #}
+    <div class="adduser">
+        <a href="{{ path('admin_user_create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>
+    </div>
 
     <div class="container mt-4">
         <h2>Liste des membres</h2>
@@ -19,7 +24,6 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Email</th>
                     <th>Pseudo</th>
                     <th>Date de naissance</th>
@@ -31,7 +35,6 @@
             <tbody>
             {% for user in users %}
                 <tr>
-                    <td>{{ user.id }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.pseudo }}</td>
                     <td>{{ user.DateOfBirth }}</td>
@@ -49,7 +52,7 @@
                         <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
 
                         {# SUPPRIMER l'utilisateur #}
-                        <form method="POST" action="{{ path('admin_user_delete', {'id': user.id}) }}" style="display: inline-block"
+                        <form method="POST" action="{{ path('admin_user_delete', {'id': user.id}) }}"
                             onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
@@ -60,12 +63,6 @@
             {% endfor %}
             </tbody>
         </table>
-
-        {# CREER un utilisateur #}
-        <div class="class-right">
-            <a href="{{ path('admin_user_create') }}" class="btn btn-primary">Ajouter un nouvel utilisateur</a>
-        </div>
-
     </div> 
 
 {% endblock %}

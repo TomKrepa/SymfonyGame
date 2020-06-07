@@ -4,6 +4,8 @@
 
 {% block body %}
 
+<h1>Panier</h1>
+
     {% for message in app.flashes('warning') %}
         <div class="alert alert-danger">
             {{ message }}
@@ -11,8 +13,8 @@
     {% endfor %}
 
     <div class="container mt-4">
-        <h1>Vos Produits</h1>
-
+        <h2>Liste de vos produits</h2>
+        
             {% if items | length > 0 %}
                 <table class="table">
                     <thead>
@@ -29,12 +31,12 @@
                         {% for item in items %}
                             <tr>
                                 <td>{{ item.jeux.titre }}</td>
-                                <td><img src="{{ item.jeux.image }}" alt="" style="width: 200px; height: 100px"></td>
+                                <td><img src="{{ item.jeux.image }}" style="width: 200px; height: 100px"></td>
                                 <td>{{ item.jeux.prix }}  €</td>
                                 <td>{{ item.quantity }}</td>
                                 <td>{{ item.jeux.prix * item.quantity }} €</td>
                                 <td>
-                                    <a href="{{ path('panier_remove', {'id': item.jeux.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                                    <a href="{{ path('panier_remove', {'id': item.jeux.id}) }}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}

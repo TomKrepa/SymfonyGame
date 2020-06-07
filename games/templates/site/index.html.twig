@@ -18,13 +18,13 @@
 
                 <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div>
 
-                <img src="{{ jeu.image }}" alt="" style="width: 300px; height: 150px; border-radius: 10px">
+                <img src="{{ jeu.image }}" alt="" style="width: 300px; height: 150px">
                     
                 <div class="content">
                     {{ jeu.details }}<br><br>
                     <p>Prix : {{ jeu.prix }}€</p>
                     <a href="{{ path('game_show', {'id': jeu.id}) }}" class="btn btn-primary" style="float: left">Voir le jeu</a>
-                    <a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary" style="float: left">Ajouter au Panier</a>
+                    <a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary" style="float: left"><i class="fas fa-shopping-bag"></i></a>
 
                     {# Si l'utilisateur est connecté et qu'il a aimé ce jeu, Coeur plein, sinon Coeur vide #}
                     <a href="{{ path('games_like', {'id': jeu.id}) }}" class="btn btn-link js-like">

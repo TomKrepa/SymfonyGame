@@ -4,10 +4,11 @@
 
 {% block body %}
 
+<h1>Gestion des jeux</h1>
+
     <div class="container mt-4">
-
-        <h1>Gérer les jeux</h1>
-
+        <h2>Catalogue</h2>
+        
         {# MESSAGE #}
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
@@ -18,28 +19,30 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Image</th>
                     <th>Titre</th>
+                    <th>Description</th>
+                    <th>Prix</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for jeu in jeux %}
                 <tr>
-                    <td>{{ jeu.id }}</td>
-                    <td><img src="{{ jeu.image }}" alt="" style="width: 300px; height: 150px"></td>
+                    <td><img src="{{ jeu.image }}" style="width: 300px; height: 150px"></td>
                     <td>{{ jeu.titre }}</td>
+                    <td>{{ jeu.details }}</td>
+                    <td>{{ jeu.prix }} €</td>
                     <td>
                         {# EDITER le jeu #}
-                        <a href="{{ path('admin_game_edit', {'id': jeu.id}) }}" class="btn btn-secondary">Editer</a>
+                        <a href="{{ path('admin_game_edit', {'id': jeu.id}) }}" class="btn btn-secondary"><i class="fas fa-edit"></i></a><br><br>
 
                         {# SUPPRIMER le jeu #}
                         <form method="POST" action="{{ path('admin_game_delete', {'id': jeu.id}) }}" style="display: inline-block"
                             onsubmit="return confirm('Voulez-vous vraiment supprimer ce jeu ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ jeu.id) }}">
-                            <button class="btn btn-danger">Supprimer</button>
+                            <button class="btn btn-danger"><i class="fas fa-trash"></i></button><p>
                         </form>
                     </td>
                 </tr>

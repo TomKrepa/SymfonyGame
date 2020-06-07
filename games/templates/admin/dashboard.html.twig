@@ -6,7 +6,7 @@
 
     <h1>Dashboard</h1><br>
 
-    <div class="container mt-4">
+    <div class="container">
         <h2>Avis des utilisateurs</h2>
 
         {# MESSAGE #}
@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ commentaire.id }}</td>
                         <td>{{ commentaire.email }}</td>
-                        <td>{{ commentaire.jeux.id }} - <a href="{{ path('game_show', {'id': commentaire.jeux.id}) }}">Voir ce jeu</a></td>
+                        <td><a class="btn btn-secondary" href="{{ path('game_show', {'id': commentaire.jeux.id}) }}"><i class="fas fa-eye"></i></a></td>
                         <td>{{ commentaire.content }}</td>
                         <td>{{ commentaire.CreatedAt | date("m/d/Y H:s", "Europe/Paris") }}</td>
                         <td>
@@ -41,7 +41,7 @@
                                 onsubmit="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.id) }}">
-                                <button class="btn btn-danger">Supprimer</button>
+                                <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>

@@ -12,7 +12,7 @@
 
             <div class="content">
                 {{ jeu.details }}<br><br>
-                <p>Prix : {{ jeu.prix }} €</p><a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary">Ajouter au Panier</a>
+                <p>Prix : {{ jeu.prix }} €</p><a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary"><i class="fas fa-shopping-bag"></i></a>
                 <hr>
             </div>
         </games>
@@ -31,7 +31,7 @@
 
             {{ form_row(commentForm.content) }}<br>
                 <button type="submit" class="btn btn-success">Laissez votre avis !</button>
-                <a href="{{ path('games') }}" class="btn btn-primary">RETOUR</a>
+                <a href="{{ path('games') }}" class="btn btn-primary">CATALOGUE</a>
                 
             {{ form_end(commentForm) }}
         {% else %}

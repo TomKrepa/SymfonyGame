@@ -2,6 +2,20 @@
 
 {% block body %}
 
-    <h1>Vous êtes sur la page d'acceuil</h1>
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 5px">
+        <h1>PROJET DEV WEB JEUX VIDEO</h1>
+        <h3><a style="display: inline-block;" class="nav-link" href="{{ path('security_registration') }}">Créez un compte</a>ou<a style="display: inline-block;" class="nav-link" href="{{ path('security_login') }}">connectez vous</a>
+        {% if app.user %}
+            pour accéder à notre<a style="display: inline-block;" class="nav-link" href="{{ path('games') }}">Catalogue</a>
+        {% else %}
+            pour accéder à notre Catalogue</h3>
+        {% endif %}
+        
+    </div><br>
+
+    <div class="acceuil">
+        <div class="acceuil__content">
+        </div>
+    </div>
 
 {% endblock %}

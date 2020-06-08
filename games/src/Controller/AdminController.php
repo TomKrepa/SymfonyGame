@@ -9,6 +9,7 @@ use App\Form\JeuType;
 use App\Form\UserType;
 use App\Form\RegistrationType;
 use App\Repository\CommentairesRepository;
+use App\Repository\JeuLikeRepository;
 use App\Repository\JeuxRepository;
 use App\Repository\UsersRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -210,12 +211,16 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/dashboard", name="admin_dashboard")
      */
-    public function dashboard(CommentairesRepository $CommentRepo)
+    public function dashboard(CommentairesRepository $CommentRepo, JeuLikeRepository $LikeRepo)
     {
+        $likes = $LikeRepo->findAll();
         $commentaires = $CommentRepo->findAll();
+
+        //dd($likes);
 
         return $this->render('admin/dashboard.html.twig', [
             'commentaires' => $commentaires,
+            'likes' => $likes
         ]);
     }
 

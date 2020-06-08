@@ -45,6 +45,24 @@
                     </tr>
                 {% endfor %}
                 </tbody>
+        </table><br><br><br>
+
+        <h2>Les mentions j'aime des utilisateurs</h2>
+        <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Jeux</th>
+                        <th>Membre ayant aimer ce jeu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for like in likes %}
+                    <tr>
+                        <td>{{ like.jeu.titre }}</td>
+                        <td>{{ like.user.email }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
         </table>
     </div>
 

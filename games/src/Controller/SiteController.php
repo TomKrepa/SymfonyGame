@@ -161,8 +161,6 @@ class SiteController extends AbstractController
         // Utilise la fonction du PanierService
         $panierService->remove($id);
 
-        $this->addFlash('warning', 'Le jeu ' . $jeu->getTitre() . ' a été supprimer du panier');
-
         return $this->redirectToRoute('panier');
     }
 }

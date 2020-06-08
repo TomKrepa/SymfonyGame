@@ -31,7 +31,7 @@
                             <a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary"><i class="fas fa-shopping-bag"></i></a>
                         </div>
 
-                    {# Si l'utilisateur est connecté et qu'il a aimé ce jeu, Coeur plein, sinon Coeur vide #}
+                        {# Si l'utilisateur est connecté et qu'il a aimé ce jeu, Coeur plein, sinon Coeur vide #}
                         <div>
                             <a href="{{ path('games_like', {'id': jeu.id}) }}" class="btn btn-link js-like">
                                 {% if app.user and jeu.isLikedByUser(app.user) %}

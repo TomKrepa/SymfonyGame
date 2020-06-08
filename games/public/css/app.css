@@ -50,24 +50,25 @@ img {
     align-items: center;
 }
 
-games img {
+.show img {
     width: 400px;
     height: 200px;
 }
 
-.acceuil {
-    background-image: linear-gradient(#cac8c86e, #cac8c86e), url("../img/acceuil.png");
-    height: 690px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+.home {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    margin-top: 50px;
 }
 
-.acceuil__content {
-    text-align: center;
+.home h2 {
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
+.home a {
+    font-size: 20px;
+}
 

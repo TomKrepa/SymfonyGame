@@ -216,8 +216,6 @@ class AdminController extends AbstractController
         $likes = $LikeRepo->findAll();
         $commentaires = $CommentRepo->findAll();
 
-        //dd($likes);
-
         return $this->render('admin/dashboard.html.twig', [
             'commentaires' => $commentaires,
             'likes' => $likes

@@ -5,7 +5,7 @@
 {% block body %}
 
     {# ESPACE PRODUIT #}
-        <games>
+        <div class="show">
             <h2>{{ jeu.titre }}</h2><br>
             <div class="metadata">Publié le {{ jeu.CreatedAt | date("m/d/Y", "Europe/Paris") }} dans la catégorie Manga</div><br>
             <img src="{{ jeu.image }}" alt=""><br><br>
@@ -15,7 +15,7 @@
                 <p>Prix : {{ jeu.prix }} €</p><a href="{{ path('panier_add', {'id': jeu.id}) }}" class="btn btn-secondary"><i class="fas fa-shopping-bag"></i></a>
                 <hr>
             </div>
-        </games>
+        </div>
 
     {# ESPACE COMMENTAIRES #}
         <h3>Commentaires :</h3><br>

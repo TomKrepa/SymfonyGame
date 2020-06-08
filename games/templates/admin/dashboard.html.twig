@@ -51,15 +51,15 @@
         <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>Utilisateurs</th>
                         <th>Jeux</th>
-                        <th>Membre ayant aimer ce jeu</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for like in likes %}
                     <tr>
-                        <td>{{ like.jeu.titre }}</td>
-                        <td>{{ like.user.email }}</td>
+                        <td>{{ like.user.email }} aime le jeu...</td>
+                        <td>{{ like.jeu.titre }}</td>    
                     </tr>
                 {% endfor %}
                 </tbody>
